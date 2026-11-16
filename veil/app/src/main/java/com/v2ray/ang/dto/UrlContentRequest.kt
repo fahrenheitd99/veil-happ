@@ -8,7 +8,15 @@ data class UrlContentRequest(
     val proxyPassword: String? = null,
     val userAgent: String? = null,
     val hwid: String? = null,
-    val headers: Map<String, String>? = null
+    val headers: Map<String, String>? = null,
+    val happEnabled: Boolean = false,
+    val happAppVersion: String? = null,
+    val happDeviceLocale: String? = null,
+    val happHwid: String? = null,
+    val happDeviceOs: String? = null,
+    val happVerOs: String? = null,
+    val happDeviceModel: String? = null,
+    val happUserId: String? = null,
 )
 
 data class HttpResponseWithHeaders(
