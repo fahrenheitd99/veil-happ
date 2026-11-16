@@ -636,9 +636,10 @@ object AngConfigManager {
                 }
             }
             LogUtil.i(AppConfig.TAG, url)
-            val userAgent = it.subscription.userAgent
-            val hwid = it.subscription.hwid
-            val customHeaders = it.subscription.customHeaders
+            val sub = it.subscription
+            val userAgent = sub.userAgent
+            val hwid = sub.hwid
+            val customHeaders = sub.customHeaders
             val proxyUsername = SettingsManager.getSocksUsername()
             val proxyPassword = SettingsManager.getSocksPassword()
 
@@ -653,7 +654,15 @@ object AngConfigManager {
                         timeout = 15000,
                         httpPort = httpPort,
                         proxyUsername = proxyUsername,
-                        proxyPassword = proxyPassword
+                        proxyPassword = proxyPassword,
+                        happEnabled = sub.happEnabled,
+                        happAppVersion = sub.happAppVersion,
+                        happDeviceLocale = sub.happDeviceLocale,
+                        happHwid = sub.happHwid,
+                        happDeviceOs = sub.happDeviceOs,
+                        happVerOs = sub.happVerOs,
+                        happDeviceModel = sub.happDeviceModel,
+                        happUserId = sub.happUserId
                     )
                 )
             } catch (e: Exception) {
@@ -667,7 +676,15 @@ object AngConfigManager {
                             url = url,
                             userAgent = userAgent,
                             hwid = hwid,
-                            headers = customHeaders
+                            headers = customHeaders,
+                            happEnabled = sub.happEnabled,
+                            happAppVersion = sub.happAppVersion,
+                            happDeviceLocale = sub.happDeviceLocale,
+                            happHwid = sub.happHwid,
+                            happDeviceOs = sub.happDeviceOs,
+                            happVerOs = sub.happVerOs,
+                            happDeviceModel = sub.happDeviceModel,
+                            happUserId = sub.happUserId
                         )
                     )
                 } catch (e: Exception) {
