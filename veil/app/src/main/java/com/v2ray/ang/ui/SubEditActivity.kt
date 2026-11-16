@@ -175,6 +175,16 @@ fun SubEditScreen(
     var prevProfile by rememberSaveable { mutableStateOf(initial.prevProfile ?: "") }
     var nextProfile by rememberSaveable { mutableStateOf(initial.nextProfile ?: "") }
 
+    // Happ fields state
+    var happEnabled by rememberSaveable { mutableStateOf(initial.happEnabled) }
+    var happAppVersion by rememberSaveable { mutableStateOf(initial.happAppVersion) }
+    var happDeviceLocale by rememberSaveable { mutableStateOf(initial.happDeviceLocale) }
+    var happHwid by rememberSaveable { mutableStateOf(initial.happHwid) }
+    var happDeviceOs by rememberSaveable { mutableStateOf(initial.happDeviceOs) }
+    var happVerOs by rememberSaveable { mutableStateOf(initial.happVerOs) }
+    var happDeviceModel by rememberSaveable { mutableStateOf(initial.happDeviceModel) }
+    var happUserId by rememberSaveable { mutableStateOf(initial.happUserId) }
+
     var showDeleteConfirm by rememberSaveable { mutableStateOf(false) }
     val confirmRemove = MmkvManager.decodeSettingsBool(AppConfig.PREF_CONFIRM_REMOVE, false)
     val scrollState = rememberScrollState()
@@ -210,6 +220,17 @@ fun SubEditScreen(
         subItem.prevProfile = prevProfile
         subItem.nextProfile = nextProfile
         subItem.allowInsecureUrl = allowInsecureUrl
+        
+        // Save Happ fields
+        subItem.happEnabled = happEnabled
+        subItem.happAppVersion = happAppVersion
+        subItem.happDeviceLocale = happDeviceLocale
+        subItem.happHwid = happHwid
+        subItem.happDeviceOs = happDeviceOs
+        subItem.happVerOs = happVerOs
+        subItem.happDeviceModel = happDeviceModel
+        subItem.happUserId = happUserId
+        
         return subItem
     }
 
@@ -282,7 +303,7 @@ fun SubEditScreen(
                     onClick = { hwid = Utils.generateHwid() },
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    androidx.compose.material3.Text(stringResource(R.string.sub_setting_hwid_generate))
+                    Text(stringResource(R.string.sub_setting_hwid_generate))
                 }
             }
             FormTextField(
@@ -291,6 +312,32 @@ fun SubEditScreen(
                 onValueChange = { customHeadersText = it },
                 placeholder = stringResource(R.string.sub_setting_custom_headers_hint)
             )
+
+            // --- HAPP SPOOFING SECTION ---
+            Spacer(modifier = Modifier.height(8.dp))
+            SettingsSwitchItem(
+                title = "Имитация клиента Happ",
+                checked = happEnabled,
+                onCheckedChange = { happEnabled = it }
+            )
+            AnimatedVisibility(
+                visible = happEnabled,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                Column(modifier = Modifier.padding(vertical = 4.dp)) {
+                    FormTextField("Версия приложения (App Version)", happAppVersion, { happAppVersion = it })
+                    FormTextField("Язык (Locale)", happDeviceLocale, { happDeviceLocale = it })
+                    FormTextField("ОС (Device OS)", happDeviceOs, { happDeviceOs = it })
+                    FormTextField("Версия ОС (OS Version)", happVerOs, { happVerOs = it }, keyboardType = KeyboardType.Number)
+                    FormTextField("Модель устройства (Device Model)", happDeviceModel, { happDeviceModel = it })
+                    FormTextField("ID пользователя (User ID)", happUserId, { happUserId = it })
+                    FormTextField("HWID Happ", happHwid, { happHwid = it })
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            // ---------------------------
+
             FormTextField(stringResource(R.string.sub_setting_filter), filter, { filter = it })
             SettingsSwitchItem(
                 title = stringResource(R.string.sub_setting_enable),
