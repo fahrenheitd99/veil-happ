@@ -20,5 +20,12 @@ data class SubscriptionItem(
     var supportUrl: String = "",
     var profileWebPageUrl: String = "",
     var announce: String = "",
+    var happEnabled: Boolean = false,
+    var happAppVersion: String = "4.3.0",
+    var happDeviceLocale: String = "ru",
+    var happHwid: String = "",
+    var happDeviceOs: String = "Android",
+    var happVerOs: String = "17",
+    var happDeviceModel: String = "A024",
+    var happUserId: String = "17877369741321921609",
 )
-
